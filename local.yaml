@@ -1,0 +1,13 @@
+version: "2.0"
+services:
+    devkitpro:
+        image: $DOCKER_IMAGE
+        environment:
+            MAKE_DIRECTORY: "$MAKE_DIRECTORY"
+        command: >
+          bash -c 'echo "Start DevKitPro..." && 
+            cd $MAKE_DIRECTORY &&
+            sed -i "s#int nanosleep#//int nanosleep#g" /opt/devkitpro/libogc/include/ogcsys.h &&
+            make all'
+        volumes:
+            - ./custom/:/mnt/custom/:rw,z
